@@ -41,9 +41,10 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\InputController.cs" />
      <Compile Include="Assets\Scripts\BordersHandler.cs" />
      <Compile Include="Assets\Scripts\PlayerMovementController.cs" />
-     <Compile Include="Assets\Scripts\InputController.cs" />
+     <Compile Include="Assets\Scripts\ObjectPooler.cs" />
      <Reference Include="UnityEngine">
      <HintPath>F:\Unity\2021.3.4f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

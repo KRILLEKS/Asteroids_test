@@ -5,20 +5,36 @@ using UnityEngine;
 
 public class BordersHandler : MonoBehaviour
 {
-   [SerializeField] private Camera camera;
+   [SerializeField] private Camera mainCamera;
    [SerializeField] private float offset;
 
-   // private variables
+   // private static variables
    // this are corners of a border not of camera (camera corner + offset)
-   private Vector2 _botLeftCorner;
-   private Vector2 _topRightCorner;
+   private static Vector2 _botLeftCorner;
+   private static Vector2 _topRightCorner;
 
    private void Awake()
    {
-      _botLeftCorner = camera.ViewportToWorldPoint(new Vector3(0, 0, camera.nearClipPlane))
+      _botLeftCorner = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane))
                        - new Vector3(offset, offset,0);
-      _topRightCorner = camera.ViewportToWorldPoint(new Vector3(1, 1, camera.nearClipPlane))
+      _topRightCorner = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane))
                         + new Vector3(offset, offset, 0);
+   }
+
+   public static bool isWithinBorders(Vector3 position)
+   {
+      return position.x > _botLeftCorner.x && position.x < _topRightCorner.x &&
+             position.y < _topRightCorner.y && position.y > _botLeftCorner.y;
+   }
+
+   public static Vector3 getPosWithinBorders(Vector3 position)
+   {
+      if (position.x < _botLeftCorner.x || position.x > _topRightCorner.x)
+         return new Vector3(-position.x, position.y);
+      else if (position.y < _botLeftCorner.y || position.y > _topRightCorner.y)
+         return new Vector3(position.x, -position.y);
+      else
+         return position;
    }
 
    private void OnDrawGizmos()
@@ -26,9 +42,9 @@ public class BordersHandler : MonoBehaviour
       if (Application.isPlaying)
          return;
 
-      _botLeftCorner = camera.ViewportToWorldPoint(new Vector3(0, 0, camera.nearClipPlane))
+      _botLeftCorner = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane))
                        - new Vector3(offset, offset,0);
-      _topRightCorner = camera.ViewportToWorldPoint(new Vector3(1, 1, camera.nearClipPlane))
+      _topRightCorner = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane))
                         + new Vector3(offset, offset, 0);
 
       Gizmos.DrawLine(_botLeftCorner, new Vector3(_botLeftCorner.x, _topRightCorner.y)); // left
