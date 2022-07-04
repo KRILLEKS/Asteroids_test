@@ -373,10 +373,14 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
-"Assets/Scripts/BordersHandler.cs"
-"Assets/Scripts/InputController.cs"
-"Assets/Scripts/ObjectPooler.cs"
-"Assets/Scripts/PlayerMovementController.cs"
+"Assets/Scripts/Global/BordersHandler.cs"
+"Assets/Scripts/Global/Constants.cs"
+"Assets/Scripts/Global/InputController.cs"
+"Assets/Scripts/Global/ObjectPooler.cs"
+"Assets/Scripts/Objects/AsteroidController.cs"
+"Assets/Scripts/Objects/SpawnHandler.cs"
+"Assets/Scripts/Player/PlayerMovementController.cs"
+"Assets/Scripts/Player/PlayerShootingController.cs"
 -langversion:9.0
 
 /deterministic

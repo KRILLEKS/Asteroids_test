@@ -41,10 +41,14 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\InputController.cs" />
-     <Compile Include="Assets\Scripts\BordersHandler.cs" />
-     <Compile Include="Assets\Scripts\PlayerMovementController.cs" />
-     <Compile Include="Assets\Scripts\ObjectPooler.cs" />
+     <Compile Include="Assets\Scripts\Global\InputController.cs" />
+     <Compile Include="Assets\Scripts\Global\BordersHandler.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerShootingController.cs" />
+     <Compile Include="Assets\Scripts\Objects\AsteroidController.cs" />
+     <Compile Include="Assets\Scripts\Global\Constants.cs" />
+     <Compile Include="Assets\Scripts\Global\ObjectPooler.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerMovementController.cs" />
+     <Compile Include="Assets\Scripts\Objects\SpawnHandler.cs" />
      <Reference Include="UnityEngine">
      <HintPath>F:\Unity\2021.3.4f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
