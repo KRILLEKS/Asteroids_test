@@ -390,6 +390,7 @@
 "Assets/Scripts/Player/PlayerData.cs"
 "Assets/Scripts/Player/PlayerMovementController.cs"
 "Assets/Scripts/Player/PlayerShootingController.cs"
+"Assets/Scripts/SoundsManager.cs"
 -langversion:9.0
 
 /deterministic

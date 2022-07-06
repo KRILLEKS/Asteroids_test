@@ -31,6 +31,8 @@ public class UFOController : MonoBehaviour
       // check borders
       if (BordersHandler.IsWithinBorders(transform.position) == false)
          transform.position = BordersHandler.GetPosWithinBorders(transform.position);
+      
+      SoundsManager.PlaySound(Constants.Sounds.UFO);
    }
 
    private IEnumerator ShootCoroutine()

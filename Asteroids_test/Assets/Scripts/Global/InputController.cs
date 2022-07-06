@@ -37,5 +37,9 @@ public class InputController : MonoBehaviour
       
       _movementVector.y = Input.GetAxisRaw("Horizontal");
       _movementVector.x = Input.GetAxisRaw("Vertical");
+
+      // right mouse acceleration
+      if (Input.GetKey(KeyCode.Mouse1))
+         _movementVector.x = 1;
    }
 }

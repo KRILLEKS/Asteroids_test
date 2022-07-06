@@ -19,6 +19,8 @@ public class PlayerShootingController : MonoBehaviour
 
       ObjectPooler.SpawnFromPool(Constants.PoolObjects.PlayerBullet, transform.position + transform.right * offset, transform.rotation);
       _previousShotTime = Time.time;
+      
+      SoundsManager.PlaySound(Constants.Sounds.PlayerFire);
    }
 
    private void OnDrawGizmos()

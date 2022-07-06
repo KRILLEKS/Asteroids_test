@@ -4,7 +4,8 @@ using UnityEngine;
 
 // there be all values that can affect gameplay globally and which can be changed
 // this values are here to prevent searching for them in scene
-// the reason why enum is here (there will be all enums but in this project I have only 1) cause u can add extra values and u don't need to search for it
+// the reason why enum is here (there will be all enums but in this project I have only 2) cause u can add extra values and u don't need to search for it
+// because you know that all enums are in one object
 public class Constants
 {
    // asteroid scales
@@ -30,7 +31,7 @@ public class Constants
    public const float PointsPerUFO = 200;
    
    // player data
-   public const int LifeAmount = 2;
+   public const int LifeAmount = 5;
    public const float InvulnerabilityTime = 3f; // in seconds
    public const int BlinkingTimes = 5; // how many times blinking per invulnerability period
    public const float BlinkingAlpha = 0.5f; // range between 0 and 1
@@ -57,5 +58,14 @@ public class Constants
       PlayerBullet,
       UFOBullet,
       UFO
+   }
+   public enum Sounds
+   {
+      PlayerFire,
+      UFO,
+      Thruster,
+      SmallExplosion,
+      MediumExplosion,
+      BigExplosion,
    }
 }

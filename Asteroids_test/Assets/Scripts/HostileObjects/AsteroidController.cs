@@ -94,12 +94,15 @@ public class AsteroidController : MonoBehaviour
       switch (size)
       {
          case 2: // big
+            SoundsManager.PlaySound(Constants.Sounds.BigExplosion);
             ObjectPooler.Return2Pool(Constants.PoolObjects.BigAsteroid, object2Return);
             break;
          case 1: // medium
+            SoundsManager.PlaySound(Constants.Sounds.MediumExplosion);
             ObjectPooler.Return2Pool(Constants.PoolObjects.MediumAsteroid, object2Return);
             break;
          case 0: // small
+            SoundsManager.PlaySound(Constants.Sounds.SmallExplosion);
             ObjectPooler.Return2Pool(Constants.PoolObjects.SmallAsteroid, object2Return);
             break;
       }

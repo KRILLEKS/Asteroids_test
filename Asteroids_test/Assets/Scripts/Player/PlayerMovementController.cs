@@ -6,7 +6,7 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerMovementController : MonoBehaviour
 {
-   [SerializeField, Range(0.1f, 1f)] private float acceleration;
+   [SerializeField, Range(0.1f, 2f)] private float acceleration;
    [SerializeField, Range(0.5f, 2f)] private float maxSpeed;
    [SerializeField, Range(0, 1f)] private float inertiaDecayCoefficient; // 0 - without inertia decay, 1 - almost without inertia
    [Space]
@@ -41,7 +41,10 @@ public class PlayerMovementController : MonoBehaviour
       
       // move
       if (InputController._movementVector.x != 0)
+      {
          _movementVector += transform.right * (acceleration * Time.deltaTime);
+         SoundsManager.PlaySound(Constants.Sounds.Thruster);
+      }
       
       // clamp
       if (Mathf.Abs(_movementVector.x) > maxSpeed)
