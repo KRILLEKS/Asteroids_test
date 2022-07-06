@@ -6,42 +6,14 @@ using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerBulletController : MonoBehaviour
+public class PlayerBulletController : Bullet
 {
-   // private variables
-   private Vector3 _previousPos;
-   private float _distanceTraveled;
-   private bool _needs2Reset = true;
-
    private void Update()
    {
-      // set start pos
-      if (_needs2Reset)
-      {
-         _previousPos = transform.position;
-         _needs2Reset = false;
-         _distanceTraveled = 0;
-         return;
-      }
-      
       // move
       transform.position += transform.right * (Constants.PlayerBulletSpeed * Time.deltaTime);
-      _distanceTraveled += Vector3.Distance(transform.position, _previousPos);
-      _previousPos = transform.position;
-
-      // return to pool when reached max distance
-      if (_distanceTraveled > BordersHandler.TopRightCorner.x * 2)
-      {
-         _needs2Reset = true;
-         ObjectPooler.Return2Pool(Constants.PoolObjects.PlayerBullet, gameObject);
-      }
       
-      // check borders
-      if (BordersHandler.IsWithinBorders(transform.position) == false)
-      {
-         transform.position = BordersHandler.GetPosWithinBorders(transform.position);
-         _previousPos = transform.position;
-      }
+      CheckState();
    }
 
    private void OnTriggerEnter2D(Collider2D colliderInfo)
@@ -51,9 +23,14 @@ public class PlayerBulletController : MonoBehaviour
 
       _needs2Reset = true;
       
-      if (colliderInfo.CompareTag("Asteroid"))
+      if (colliderInfo.CompareTag($"Asteroid"))
       {
          colliderInfo.GetComponent<AsteroidController>().DamageAsteroid();
+         ObjectPooler.Return2Pool(Constants.PoolObjects.PlayerBullet, gameObject);
+      }
+      else if (colliderInfo.CompareTag($"UFO"))
+      {
+         colliderInfo.GetComponent<UFOController>().DestroyUFO(true);
          ObjectPooler.Return2Pool(Constants.PoolObjects.PlayerBullet, gameObject);
       }
    }

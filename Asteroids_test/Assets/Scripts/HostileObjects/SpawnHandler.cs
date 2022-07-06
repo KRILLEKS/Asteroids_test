@@ -9,20 +9,22 @@ using Random = UnityEngine.Random;
 public class SpawnHandler : MonoBehaviour
 {
    [SerializeField] private int startAsteroidsAmount;
-   
+
    // private static variables
    private static int _currentLevelBigAsteroidsAmount;
    private static int _asteroidsAmountInScene = 0;
    private static SpawnHandler _spawnHandler;
-   
+
    private void Awake()
    {
       _spawnHandler = this;
-      
+
       for (int i = 0; i < startAsteroidsAmount; i++)
          SpawnBigAsteroid();
-      
+
       _currentLevelBigAsteroidsAmount = startAsteroidsAmount + 1;
+
+      SpawnUFO();
    }
 
    private static void SpawnBigAsteroid()
@@ -44,11 +46,17 @@ public class SpawnHandler : MonoBehaviour
 
    public static void SplitAsteroid(int childAsteroidsSize, Vector3 position, Vector3 moveVector)
    {
-      SpawnNonBigAsteroid(childAsteroidsSize == 0 ? Constants.PoolObjects.SmallAsteroid : Constants.PoolObjects.MediumAsteroid, position, Quaternion.AngleAxis(-45, Vector3.forward) * moveVector);
-      SpawnNonBigAsteroid(childAsteroidsSize == 0 ? Constants.PoolObjects.SmallAsteroid : Constants.PoolObjects.MediumAsteroid, position, Quaternion.AngleAxis(45, Vector3.forward) * moveVector);
+      SpawnNonBigAsteroid(childAsteroidsSize == 0 ? Constants.PoolObjects.SmallAsteroid : Constants.PoolObjects.MediumAsteroid,
+                          position,
+                          Quaternion.AngleAxis(-45, Vector3.forward) * moveVector);
+      SpawnNonBigAsteroid(childAsteroidsSize == 0 ? Constants.PoolObjects.SmallAsteroid : Constants.PoolObjects.MediumAsteroid,
+                          position,
+                          Quaternion.AngleAxis(45, Vector3.forward) * moveVector);
    }
 
-   public static void AsteroidWasDestroyed()
+   // basically when we destroy asteroid we decrease amount by 1
+   // but if it collides with UFO or player we can decrease it on bigger value
+   public static void AsteroidWasDestroyed(int amount = 1)
    {
       _asteroidsAmountInScene--;
 
@@ -66,9 +74,9 @@ public class SpawnHandler : MonoBehaviour
    {
       yield return new WaitForSeconds(Random.Range(Constants.MinUFOSpawnTime, Constants.MaxUFOSpawnTime));
 
-      ObjectPooler.SpawnFromPool(Constants.PoolObjects.UFO, BordersHandler.GetEdgePosition(), Quaternion.identity);
+      ObjectPooler.SpawnFromPool(Constants.PoolObjects.UFO, BordersHandler.GetRandomUFOPosition(), Quaternion.identity);
    }
-   
+
    private static IEnumerator AsteroidSpawnCoroutine()
    {
       yield return new WaitForSeconds(Constants.Time2SpawnNewLevel);

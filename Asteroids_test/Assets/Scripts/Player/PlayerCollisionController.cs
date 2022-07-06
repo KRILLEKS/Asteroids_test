@@ -13,6 +13,7 @@ public class PlayerCollisionController : MonoBehaviour
    private void Awake()
    {
       _playerSprite = GetComponent<SpriteRenderer>();
+      StartCoroutine(OnBecameInvulnerable());
    }
 
    private IEnumerator OnBecameInvulnerable()
@@ -39,6 +40,9 @@ public class PlayerCollisionController : MonoBehaviour
    {
       if (_isInvulnerable || colliderInfo.gameObject.layer != LayerMask.NameToLayer($"HostileObject"))
          return;
+      
+      if (colliderInfo.CompareTag($"Asteroid"))
+         colliderInfo.GetComponent<AsteroidController>().DestroyAsteroid();
 
       PlayerData.LifeAmount--;
 

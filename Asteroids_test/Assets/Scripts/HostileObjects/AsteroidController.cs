@@ -43,7 +43,6 @@ public class AsteroidController : MonoBehaviour
          transform.position = BordersHandler.GetEdgePosition();
    }
 
-
    public void SetRandomForce()
    {
       _moveVector.x = Random.Range(0, 2) == 0
@@ -67,14 +66,42 @@ public class AsteroidController : MonoBehaviour
                                     _moveVector * Random.Range(Constants.ChildAsteroidMinSpeedDifference, Constants.ChildAsteroidMaxSpeedDifference));
 
          PlayerData.Points += (size == 2 ? Constants.PointsPerBigAsteroid : Constants.PointsPerMediumAsteroid);
-         ObjectPooler.Return2Pool(size == 2 ? Constants.PoolObjects.BigAsteroid : Constants.PoolObjects.MediumAsteroid, gameObject);
       }
       else
       {
          PlayerData.Points += (Constants.PointsPerSmallAsteroid);
-         ObjectPooler.Return2Pool(Constants.PoolObjects.SmallAsteroid, gameObject);
       }
-      
+
       SpawnHandler.AsteroidWasDestroyed();
+      Return2Pool(size, gameObject);
+   }
+
+   // on collision with UFO or player
+   public void DestroyAsteroid()
+   {
+      if (size == 2)
+         SpawnHandler.AsteroidWasDestroyed(7); // 1 big + 2 medium + 4 small
+      else if (size == 1)
+         SpawnHandler.AsteroidWasDestroyed(3); // 1 medium + 2 small
+      else
+         SpawnHandler.AsteroidWasDestroyed(1);
+      
+      Return2Pool(size, gameObject);
+   }
+
+   private void Return2Pool(int size, GameObject object2Return)
+   {
+      switch (size)
+      {
+         case 2: // big
+            ObjectPooler.Return2Pool(Constants.PoolObjects.BigAsteroid, object2Return);
+            break;
+         case 1: // medium
+            ObjectPooler.Return2Pool(Constants.PoolObjects.MediumAsteroid, object2Return);
+            break;
+         case 0: // small
+            ObjectPooler.Return2Pool(Constants.PoolObjects.SmallAsteroid, object2Return);
+            break;
+      }
    }
 }

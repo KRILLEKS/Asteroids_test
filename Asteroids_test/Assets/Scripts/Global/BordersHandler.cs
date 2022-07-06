@@ -65,6 +65,12 @@ public class BordersHandler : MonoBehaviour
       return new Vector3(Random.Range(BotLeftCorner.x + offset, TopRightCorner.x - offset), Random.Range(BotLeftCorner.y - offset, TopRightCorner.y + offset));
    }
 
+   public static Vector3 GetRandomUFOPosition()
+   {
+      return new Vector3(BotLeftCorner.x, Random.Range((BotLeftCorner.y + offset) * (1 - Constants.OffsetFromBorder / 100),
+                                                       (TopRightCorner.y - offset) * (1 - Constants.OffsetFromBorder / 100)));
+   }
+
    private void OnDrawGizmos()
    {
       if (Application.isPlaying)

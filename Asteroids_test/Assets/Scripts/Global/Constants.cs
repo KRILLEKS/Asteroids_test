@@ -38,8 +38,13 @@ public class Constants
    public const float Time2SpawnNewLevel = 2; // in seconds
    
    // UFO data
-   public const float MinUFOSpawnTime = 20f; // in seconds
-   public const float MaxUFOSpawnTime = 40f; // in seconds
+   public const float MinUFOSpawnTime = 2f; // in seconds
+   public const float MaxUFOSpawnTime = 5f; // in seconds
+   public const float OffsetFromBorder = 20f; // in percent 
+   public const float UFOSpeed = 2f;
+   public const float UFOBulletSpeed = 2f;
+   public const float UFOMinTime2Shoot = 2; // in seconds
+   public const float UFOMaxTime2Shoot = 5; // in seconds
    
    public enum PoolObjects
    {

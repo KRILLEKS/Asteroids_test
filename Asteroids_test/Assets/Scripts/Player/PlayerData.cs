@@ -9,7 +9,7 @@ public class PlayerData
    {
       set
       {
-         if (_points <= value)
+         if (_points >= value)
             return;
          
          _points = value;
