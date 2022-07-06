@@ -54,8 +54,9 @@ public class PlayerCollisionController : MonoBehaviour
       }
       else
       {
-         // TODO: 
-         Debug.Log("DEATH");
+         // death
+         GameManager._isGameStarted = false;
+         PauseMenuController.OpenPauseMenu();
       }
    }
 }

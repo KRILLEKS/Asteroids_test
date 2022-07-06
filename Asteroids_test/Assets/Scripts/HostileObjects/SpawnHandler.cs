@@ -3,30 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Object = System.Object;
 using Random = UnityEngine.Random;
 
 public class SpawnHandler : MonoBehaviour
 {
-   [SerializeField] private int startAsteroidsAmount;
+   [FormerlySerializedAs("startAsteroidsAmount"),SerializeField] private int startAsteroidsAmountSerializable;
 
    // private static variables
+   private static int _startAsteroidsAmount;
    private static int _currentLevelBigAsteroidsAmount;
    private static int _asteroidsAmountInScene = 0;
    private static SpawnHandler _spawnHandler;
 
    private void Awake()
    {
+      _startAsteroidsAmount = startAsteroidsAmountSerializable;
       _spawnHandler = this;
+      
+      InitializeHandler();
+   }
 
-      for (int i = 0; i < startAsteroidsAmount; i++)
+   private static void InitializeHandler()
+   {
+      for (int i = 0; i < _startAsteroidsAmount; i++)
          SpawnBigAsteroid();
 
-      _currentLevelBigAsteroidsAmount = startAsteroidsAmount + 1;
+      _currentLevelBigAsteroidsAmount = _startAsteroidsAmount + 1;
 
       SpawnUFO();
    }
-
+   
    private static void SpawnBigAsteroid()
    {
       var obj = ObjectPooler.SpawnFromPool(Constants.PoolObjects.BigAsteroid, BordersHandler.GetEdgePosition(), Quaternion.identity);
@@ -85,5 +93,11 @@ public class SpawnHandler : MonoBehaviour
          SpawnBigAsteroid();
 
       _currentLevelBigAsteroidsAmount++;
+   }
+
+   public static void ResetValues()
+   {
+      _spawnHandler.StopAllCoroutines();
+      InitializeHandler();
    }
 }

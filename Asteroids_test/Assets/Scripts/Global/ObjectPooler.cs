@@ -15,18 +15,27 @@ public class ObjectPooler : MonoBehaviour
       public int startSize;
    }
 
-   [FormerlySerializedAs("_pools"), SerializeField] private List<Pool> pools;
+   [SerializeField] private List<Pool> poolsSerializable;
    [SerializeField] private Transform itemsHolderSerializable; // will be parent for items in pool to keep hierarchy clean
 
    // private static variables
+   private static List<Pool> _pools;
    private static Transform _itemsHolder;
-   private static Dictionary<Constants.PoolObjects, Queue<GameObject>> _poolDictionary = new ();
+   private static Dictionary<Constants.PoolObjects, Queue<GameObject>> _poolDictionary;
 
    private void Awake()
    {
+      _pools = poolsSerializable;
       _itemsHolder = itemsHolderSerializable;
       
-      foreach (var pool in pools)
+      InitializePool();
+   }
+
+   private static void InitializePool()
+   {
+      _poolDictionary = new ();
+      
+      foreach (var pool in _pools)
       {
          if (pool.prefab == null)
             continue;
@@ -50,6 +59,8 @@ public class ObjectPooler : MonoBehaviour
    public static GameObject SpawnFromPool(Constants.PoolObjects name, Vector3 position, Quaternion rotation)
    {
       GameObject object2Spawn;
+      // > 1 because when I spawn new object I just duplicate the top one of the queue
+      // alternatively I could load them from Resources folder
       if (_poolDictionary[name].Count > 1)
       {
          object2Spawn = _poolDictionary[name].Dequeue();
@@ -72,5 +83,15 @@ public class ObjectPooler : MonoBehaviour
    {
       _poolDictionary[name].Enqueue(gameObject);
       gameObject.SetActive(false);
+   }
+
+   public static void ResetValues()
+   {
+      // we could return everything to their pools depending on their names (it would be scalable cause we'll base on prefab name)
+      // but I chose the simple way because it's doesn't matter here
+      for (int i = 0; i < _itemsHolder.transform.childCount; i++)
+         Destroy(_itemsHolder.transform.GetChild(i).gameObject);
+      
+      InitializePool();
    }
 }

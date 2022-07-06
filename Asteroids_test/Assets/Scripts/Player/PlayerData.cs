@@ -13,7 +13,7 @@ public class PlayerData
             return;
          
          _points = value;
-         UIController.UpdatePointsInfo();
+         InGameUIController.UpdatePointsInfo();
       }
       get
       {
@@ -29,7 +29,7 @@ public class PlayerData
             return;
          
          _lifeAmount = value;
-         UIController.UpdateLifeInfo();
+         InGameUIController.UpdateLifeInfo();
       }
       get
       {
@@ -37,7 +37,15 @@ public class PlayerData
       }
    }
 
+   public static bool IsOnlyKeyboard;
+      
    // private static variable
    private static float _points = 0;
    private static int _lifeAmount = Constants.LifeAmount;
+
+   public static void ResetValues()
+   {
+      _points = 0;
+      _lifeAmount = Constants.LifeAmount;
+   }
 }

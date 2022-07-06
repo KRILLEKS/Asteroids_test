@@ -8,6 +8,8 @@ public class InputController : MonoBehaviour
 {
    [SerializeField] private Camera mainCamera;
    [SerializeField] private UnityEvent onLeftClick;
+   [SerializeField] private UnityEvent onSpaceClick;
+   [SerializeField] private UnityEvent onEscClick;
    
    // public static variables
    public static Vector3 _mouseWorldPos;
@@ -16,12 +18,20 @@ public class InputController : MonoBehaviour
    private void Awake()
    {
       onLeftClick ??= new UnityEvent();
+      onEscClick ??= new UnityEvent();
+      onSpaceClick ??= new UnityEvent();
    }
 
    private void Update()
    {
       if (Input.GetKeyDown(KeyCode.Mouse0))
          onLeftClick.Invoke();
+      
+      if (Input.GetKeyDown(KeyCode.Space))
+         onSpaceClick.Invoke();
+      
+      if (Input.GetKeyDown(KeyCode.Escape))
+         onEscClick.Invoke();
       
       _mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
       

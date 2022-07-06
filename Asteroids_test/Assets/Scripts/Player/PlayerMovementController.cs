@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -9,18 +10,32 @@ public class PlayerMovementController : MonoBehaviour
    [SerializeField, Range(0.5f, 2f)] private float maxSpeed;
    [SerializeField, Range(0, 1f)] private float inertiaDecayCoefficient; // 0 - without inertia decay, 1 - almost without inertia
    [Space]
-   [SerializeField, Range(1.5f,10f)] private float rotationSpeed;
+   [SerializeField, Range(1.5f,10f)] private float mouseRotationSpeed;
+   [SerializeField, Range(50f, 200f)] private float keyboardRotationSpeed; // degrees per second
 
    // private static variables
    private static Vector3 _movementVector = Vector3.zero;
+   private static GameObject _player;
+
+   private void Awake()
+   {
+      _player = GameObject.FindWithTag("Player");
+   }
 
    private void Update()
    {
-      // look at mouse
-      Vector3 direction = InputController._mouseWorldPos - transform.position;
-      float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-      transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), rotationSpeed * Time.deltaTime);
-
+      if (PlayerData.IsOnlyKeyboard)
+      {
+         transform.Rotate(Vector3.forward, keyboardRotationSpeed * -InputController._movementVector.y * Time.deltaTime );
+      }
+      else
+      {
+         // look at mouse
+         Vector3 direction = InputController._mouseWorldPos - transform.position;
+         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), mouseRotationSpeed * Time.deltaTime);
+      }
+      
       // inertia decay
       _movementVector = Vector3.Slerp(_movementVector, Vector3.zero, inertiaDecayCoefficient * Time.deltaTime);
       
@@ -42,6 +57,12 @@ public class PlayerMovementController : MonoBehaviour
 
    public static void StopMovement()
    {
+      _movementVector = Vector3.zero;
+   }
+
+   public static void ResetValues()
+   {
+      _player.transform.position = Vector3.zero;
       _movementVector = Vector3.zero;
    }
 }

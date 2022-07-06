@@ -30,7 +30,7 @@ public class Constants
    public const float PointsPerUFO = 200;
    
    // player data
-   public const int LifeAmount = 5;
+   public const int LifeAmount = 2;
    public const float InvulnerabilityTime = 3f; // in seconds
    public const int BlinkingTimes = 5; // how many times blinking per invulnerability period
    public const float BlinkingAlpha = 0.5f; // range between 0 and 1
@@ -38,13 +38,16 @@ public class Constants
    public const float Time2SpawnNewLevel = 2; // in seconds
    
    // UFO data
-   public const float MinUFOSpawnTime = 2f; // in seconds
-   public const float MaxUFOSpawnTime = 5f; // in seconds
+   public const float MinUFOSpawnTime = 20f; // in seconds
+   public const float MaxUFOSpawnTime = 40f; // in seconds
    public const float OffsetFromBorder = 20f; // in percent 
    public const float UFOSpeed = 2f;
    public const float UFOBulletSpeed = 2f;
    public const float UFOMinTime2Shoot = 2; // in seconds
    public const float UFOMaxTime2Shoot = 5; // in seconds
+   
+   // pause menu
+   public const float PauseMenuOpenSpeed = 1.2f; // in seconds
    
    public enum PoolObjects
    {
