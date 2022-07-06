@@ -11,8 +11,8 @@ public class PlayerMovementController : MonoBehaviour
    [Space]
    [SerializeField, Range(1.5f,10f)] private float rotationSpeed;
 
-   // private variables
-   private Vector3 _movementVector = Vector3.zero;
+   // private static variables
+   private static Vector3 _movementVector = Vector3.zero;
 
    private void Update()
    {
@@ -38,5 +38,10 @@ public class PlayerMovementController : MonoBehaviour
 
       if (BordersHandler.IsWithinBorders(transform.position) == false)
          transform.position = BordersHandler.GetPosWithinBorders(transform.position);
+   }
+
+   public static void StopMovement()
+   {
+      _movementVector = Vector3.zero;
    }
 }

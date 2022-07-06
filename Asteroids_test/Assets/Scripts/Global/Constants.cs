@@ -7,17 +7,47 @@ using UnityEngine;
 // the reason why enum is here (there will be all enums but in this project I have only 1) cause u can add extra values and u don't need to search for it
 public class Constants
 {
+   // asteroid scales
    public const float BigAsteroidScale = 0.2f;
    public const float MediumAsteroidScale = 0.15f;
    public const float SmallAsteroidScale = 0.1f;
 
+   // objects speed
    public const float AsteroidSpeed = 1.2f;
+   public const float PlayerBulletSpeed = 3.5f;
+   
+   // asteroid randomize info
+   public const float AsteroidMinXSpeed = 0.4f; // from 1 to 0
+   public const float AsteroidYSpeed = 1f;
+   // difference between child and parent
+   public const float ChildAsteroidMinSpeedDifference = 0.8f;
+   public const float ChildAsteroidMaxSpeedDifference = 1.2f;
+   
+   // points per object
+   public const float PointsPerBigAsteroid = 20;
+   public const float PointsPerMediumAsteroid = 50;
+   public const float PointsPerSmallAsteroid = 100;
+   public const float PointsPerUFO = 200;
+   
+   // player data
+   public const int LifeAmount = 5;
+   public const float InvulnerabilityTime = 3f; // in seconds
+   public const int BlinkingTimes = 5; // how many times blinking per invulnerability period
+   public const float BlinkingAlpha = 0.5f; // range between 0 and 1
+
+   public const float Time2SpawnNewLevel = 2; // in seconds
+   
+   // UFO data
+   public const float MinUFOSpawnTime = 20f; // in seconds
+   public const float MaxUFOSpawnTime = 40f; // in seconds
    
    public enum PoolObjects
    {
       BigAsteroid,
       MediumAsteroid,
       SmallAsteroid,
-      Bullet
+      PlayerBullet,
+      UFOBullet,
+      UFO
    }
 }

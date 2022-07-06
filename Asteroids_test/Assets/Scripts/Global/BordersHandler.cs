@@ -2,37 +2,44 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class BordersHandler : MonoBehaviour
 {
    [SerializeField] private Camera mainCamera;
-   [SerializeField] private float offset;
+   [FormerlySerializedAs("offset"), SerializeField]
+   private float offsetSerializable;
+
+   // public static variables
+   // this are corners of a border not of camera (camera corner + offset)
+   public static Vector2 BotLeftCorner;
+   public static Vector2 TopRightCorner;
 
    // private static variables
-   // this are corners of a border not of camera (camera corner + offset)
-   private static Vector2 _botLeftCorner;
-   private static Vector2 _topRightCorner;
+   private static float offset;
 
    private void Awake()
    {
-      _botLeftCorner = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane))
-                       - new Vector3(offset, offset,0);
-      _topRightCorner = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane))
-                        + new Vector3(offset, offset, 0);
+      offset = offsetSerializable;
+
+      BotLeftCorner = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane))
+                      - new Vector3(offset, offset, 0);
+      TopRightCorner = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane))
+                       + new Vector3(offset, offset, 0);
    }
 
    public static bool IsWithinBorders(Vector3 position)
    {
-      return position.x > _botLeftCorner.x && position.x < _topRightCorner.x &&
-             position.y < _topRightCorner.y && position.y > _botLeftCorner.y;
+      return position.x > BotLeftCorner.x && position.x < TopRightCorner.x &&
+             position.y < TopRightCorner.y && position.y > BotLeftCorner.y;
    }
 
    public static Vector3 GetPosWithinBorders(Vector3 position)
    {
-      if (position.x < _botLeftCorner.x || position.x > _topRightCorner.x)
+      if (position.x < BotLeftCorner.x || position.x > TopRightCorner.x)
          return new Vector3(-position.x, position.y);
-      else if (position.y < _botLeftCorner.y || position.y > _topRightCorner.y)
+      else if (position.y < BotLeftCorner.y || position.y > TopRightCorner.y)
          return new Vector3(position.x, -position.y);
       else
          return position;
@@ -40,17 +47,22 @@ public class BordersHandler : MonoBehaviour
 
    public static Vector3 GetEdgePosition()
    {
-      switch (Random.Range(0,4))
+      switch (Random.Range(0, 4))
       {
          case 1: // bot
-            return new Vector3(Random.Range(_botLeftCorner.x, _topRightCorner.x), _botLeftCorner.y);
+            return new Vector3(Random.Range(BotLeftCorner.x, TopRightCorner.x), BotLeftCorner.y);
          case 2: // top
-            return new Vector3(Random.Range(_botLeftCorner.x, _topRightCorner.x), _topRightCorner.y);
+            return new Vector3(Random.Range(BotLeftCorner.x, TopRightCorner.x), TopRightCorner.y);
          case 3: // left
-            return new Vector3(_botLeftCorner.x,Random.Range(_botLeftCorner.y, _botLeftCorner.y));
+            return new Vector3(BotLeftCorner.x, Random.Range(BotLeftCorner.y, BotLeftCorner.y));
          default: // right
-            return new Vector3(_botLeftCorner.x,Random.Range(_botLeftCorner.y, _topRightCorner.y));
+            return new Vector3(BotLeftCorner.x, Random.Range(BotLeftCorner.y, TopRightCorner.y));
       }
+   }
+
+   public static Vector3 GetRandomPosition()
+   {
+      return new Vector3(Random.Range(BotLeftCorner.x + offset, TopRightCorner.x - offset), Random.Range(BotLeftCorner.y - offset, TopRightCorner.y + offset));
    }
 
    private void OnDrawGizmos()
@@ -58,14 +70,14 @@ public class BordersHandler : MonoBehaviour
       if (Application.isPlaying)
          return;
 
-      _botLeftCorner = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane))
-                       - new Vector3(offset, offset,0);
-      _topRightCorner = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane))
-                        + new Vector3(offset, offset, 0);
+      BotLeftCorner = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane))
+                      - new Vector3(offsetSerializable, offsetSerializable, 0);
+      TopRightCorner = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane))
+                       + new Vector3(offsetSerializable, offsetSerializable, 0);
 
-      Gizmos.DrawLine(_botLeftCorner, new Vector3(_botLeftCorner.x, _topRightCorner.y)); // left
-      Gizmos.DrawLine(_topRightCorner, new Vector3(_topRightCorner.x, _botLeftCorner.y)); // right
-      Gizmos.DrawLine(_topRightCorner, new Vector3(_botLeftCorner.x, _topRightCorner.y)); // top
-      Gizmos.DrawLine(_botLeftCorner, new Vector3(_topRightCorner.x, _botLeftCorner.y)); // bot
+      Gizmos.DrawLine(BotLeftCorner, new Vector3(BotLeftCorner.x, TopRightCorner.y)); // left
+      Gizmos.DrawLine(TopRightCorner, new Vector3(TopRightCorner.x, BotLeftCorner.y)); // right
+      Gizmos.DrawLine(TopRightCorner, new Vector3(BotLeftCorner.x, TopRightCorner.y)); // top
+      Gizmos.DrawLine(BotLeftCorner, new Vector3(TopRightCorner.x, BotLeftCorner.y)); // bot
    }
 }

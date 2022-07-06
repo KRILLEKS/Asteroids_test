@@ -28,7 +28,13 @@ public class ObjectPooler : MonoBehaviour
       
       foreach (var pool in pools)
       {
+         if (pool.prefab == null)
+            continue;
+         
          var objectPool = new Queue<GameObject>();
+
+         if (pool.startSize < 1)
+            pool.startSize = 1;
 
          for (int i = 0; i < pool.startSize; i++)
          {
@@ -56,6 +62,7 @@ public class ObjectPooler : MonoBehaviour
       else
       {
          object2Spawn = Instantiate(_poolDictionary[name].Peek(), position, rotation, _itemsHolder);
+         object2Spawn.SetActive(true);
       }
 
       return object2Spawn;

@@ -377,10 +377,15 @@
 "Assets/Scripts/Global/Constants.cs"
 "Assets/Scripts/Global/InputController.cs"
 "Assets/Scripts/Global/ObjectPooler.cs"
-"Assets/Scripts/Objects/AsteroidController.cs"
-"Assets/Scripts/Objects/SpawnHandler.cs"
+"Assets/Scripts/HostileObjects/AsteroidController.cs"
+"Assets/Scripts/HostileObjects/SpawnHandler.cs"
+"Assets/Scripts/HostileObjects/UFOController.cs"
+"Assets/Scripts/Player/PlayerBulletController.cs"
+"Assets/Scripts/Player/PlayerCollisionController.cs"
+"Assets/Scripts/Player/PlayerData.cs"
 "Assets/Scripts/Player/PlayerMovementController.cs"
 "Assets/Scripts/Player/PlayerShootingController.cs"
+"Assets/Scripts/UIController.cs"
 -langversion:9.0
 
 /deterministic
