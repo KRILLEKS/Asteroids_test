@@ -27,6 +27,8 @@ public class SpawnHandler : MonoBehaviour
 
    private static void InitializeHandler()
    {
+      _asteroidsAmountInScene = 0;
+      
       for (int i = 0; i < _startAsteroidsAmount; i++)
          SpawnBigAsteroid();
 
@@ -66,8 +68,9 @@ public class SpawnHandler : MonoBehaviour
    // but if it collides with UFO or player we can decrease it on bigger value
    public static void AsteroidWasDestroyed(int amount = 1)
    {
-      _asteroidsAmountInScene--;
+      _asteroidsAmountInScene -= amount;
 
+      Debug.Log(_asteroidsAmountInScene);
       if (_asteroidsAmountInScene == 0)
          _spawnHandler.StartCoroutine(AsteroidSpawnCoroutine());
    }
