@@ -48,7 +48,7 @@ public class AsteroidController : MonoBehaviour
       _moveVector.x = Random.Range(0, 2) == 0
          ? Random.Range(-1f, -Constants.AsteroidMinXSpeed)
          : Random.Range(Constants.AsteroidMinXSpeed, 1f); // asteroids shouldn't be too slow
-      _moveVector.x = Random.Range(0, 2) == 0
+      _moveVector.y = Random.Range(0, 2) == 0
          ? Random.Range(-1f, -Constants.AsteroidMinYSpeed)
          : Random.Range(Constants.AsteroidMinYSpeed, 1f); // asteroids shouldn't be too slow
    }
