@@ -18,8 +18,8 @@ public class Constants
    public const float PlayerBulletSpeed = 3.5f;
    
    // asteroid randomize info
-   public const float AsteroidMinXSpeed = 0.4f; // from 1 to 0
-   public const float AsteroidYSpeed = 1f;
+   public const float AsteroidMinXSpeed = 0.4f; // from 0 to 1
+   public const float AsteroidMinYSpeed = 0.4f; // from 0 to 1
    // difference between child and parent
    public const float ChildAsteroidMinSpeedDifference = 0.8f;
    public const float ChildAsteroidMaxSpeedDifference = 1.2f;
