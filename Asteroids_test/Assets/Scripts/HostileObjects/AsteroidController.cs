@@ -40,7 +40,7 @@ public class AsteroidController : MonoBehaviour
       transform.position += _moveVector * (Time.deltaTime * Constants.AsteroidSpeed);
 
       if (BordersHandler.IsWithinBorders(transform.position) == false)
-         transform.position = BordersHandler.GetEdgePosition();
+         transform.position = BordersHandler.GetPosWithinBorders(transform.position);
    }
 
    public void SetRandomForce()
