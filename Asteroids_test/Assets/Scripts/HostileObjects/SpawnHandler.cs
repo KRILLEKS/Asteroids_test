@@ -56,10 +56,10 @@ public class SpawnHandler : MonoBehaviour
    {
       SpawnNonBigAsteroid(childAsteroidsSize == 0 ? Constants.PoolObjects.SmallAsteroid : Constants.PoolObjects.MediumAsteroid,
                           position,
-                          Quaternion.AngleAxis(-45, Vector3.forward) * moveVector);
+                          Quaternion.AngleAxis(-Constants.AsteroidSplitAngle, Vector3.forward) * moveVector);
       SpawnNonBigAsteroid(childAsteroidsSize == 0 ? Constants.PoolObjects.SmallAsteroid : Constants.PoolObjects.MediumAsteroid,
                           position,
-                          Quaternion.AngleAxis(45, Vector3.forward) * moveVector);
+                          Quaternion.AngleAxis(Constants.AsteroidSplitAngle, Vector3.forward) * moveVector);
    }
 
    // basically when we destroy asteroid we decrease amount by 1

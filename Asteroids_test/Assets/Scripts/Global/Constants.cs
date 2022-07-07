@@ -23,6 +23,7 @@ public class Constants
    // difference between child and parent
    public const float ChildAsteroidMinSpeedDifference = 0.8f;
    public const float ChildAsteroidMaxSpeedDifference = 1.2f;
+   public const float AsteroidSplitAngle = 45f;
    
    // points per object
    public const float PointsPerBigAsteroid = 20;
