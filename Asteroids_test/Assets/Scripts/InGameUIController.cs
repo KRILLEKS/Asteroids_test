@@ -9,7 +9,7 @@ public class InGameUIController : MonoBehaviour
 {
    [SerializeField] private TextMeshProUGUI pointsTextSerializable;
    [SerializeField] private Transform lifeContainerSerializable;
-   
+
    // private static variables
    private static TextMeshProUGUI _pointsText;
    private static Transform _lifeContainer;
@@ -36,7 +36,8 @@ public class InGameUIController : MonoBehaviour
 
    public static void UpdateLifeInfo()
    {
-      _lifeContainer.GetChild(PlayerData.LifeAmount).gameObject.SetActive(false);
+      if (PlayerData.LifeAmount > -1)
+         _lifeContainer.GetChild(PlayerData.LifeAmount).gameObject.SetActive(false);
    }
 
    public static void ResetValues()
